@@ -8,6 +8,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transportathon.Domain", "Tr
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transportathon.Domain.UnitTests", "Transportathon.Domain.UnitTests\Transportathon.Domain.UnitTests.csproj", "{403EC769-8ACF-411E-A069-D88E9A58FFDB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transportathon.Application", "Transportathon.Application\Transportathon.Application.csproj", "{270679C5-53AB-4255-950F-CD191E6890BF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -16,6 +18,7 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{DB10A984-58F4-4025-AB5F-7BA100D01647} = {072E16C4-DD61-419D-B56C-157CE46C8A57}
 		{403EC769-8ACF-411E-A069-D88E9A58FFDB} = {6ACDE413-CD4C-4194-B790-A6EDDB539BEB}
+		{270679C5-53AB-4255-950F-CD191E6890BF} = {072E16C4-DD61-419D-B56C-157CE46C8A57}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DB10A984-58F4-4025-AB5F-7BA100D01647}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -26,5 +29,9 @@ Global
 		{403EC769-8ACF-411E-A069-D88E9A58FFDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{403EC769-8ACF-411E-A069-D88E9A58FFDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{403EC769-8ACF-411E-A069-D88E9A58FFDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{270679C5-53AB-4255-950F-CD191E6890BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{270679C5-53AB-4255-950F-CD191E6890BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{270679C5-53AB-4255-950F-CD191E6890BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{270679C5-53AB-4255-950F-CD191E6890BF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

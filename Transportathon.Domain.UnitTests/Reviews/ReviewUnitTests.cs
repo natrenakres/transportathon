@@ -6,8 +6,6 @@ namespace Transportathon.Domain.UnitTests.Reviews;
 
 public class ReviewUnitTests
 {
-
-
     [Fact]
     public void Create_AddNewReviewToBooking()
     {
