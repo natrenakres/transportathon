@@ -1,6 +1,6 @@
 namespace Transportathon.Domain.Abstractions;
 
-public abstract class Entity
+public abstract class Entity :IEntity
 {
     private readonly List<IDomainEvent> _domainEvents = new();
 
