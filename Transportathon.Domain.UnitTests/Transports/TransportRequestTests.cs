@@ -45,8 +45,6 @@ public class TransportRequestTests : BaseTest
     [Fact]
     public void Create_TransportRequestAnswer_ReturnNotNull()
     {
-        
-        
         var description = new Description("1+1 evimizi Ocak ayinda Muglaya tasimak istiyoruz.");
         var address = new Address("Turkey", "", "48000", "Mugla", "Cumhuruyet");
         var beginDate = DateTime.Parse("01-01-2023 07:00");

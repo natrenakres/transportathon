@@ -5,11 +5,12 @@ namespace Transportathon.Domain.Transports;
 
 public sealed class Carrier : Entity
 {
-    public Carrier(Guid id, Name name, Year experience, Profession profession) : base(id)
+    public Carrier(Guid id, Name name, Year experience, Profession profession, bool canCommunicateWithMember) : base(id)
     {
         Name = name;
         Experience = experience;
         Profession = profession;
+        CanCommunicateWithMember = canCommunicateWithMember;
     }
 
     public Name Name { get;  private set; }
@@ -22,7 +23,7 @@ public sealed class Carrier : Entity
 
     public static Carrier Create(Name name, Year experience, Profession profession, bool canCommunicateWithMember)
     {
-        var carrier = new Carrier(Guid.NewGuid(), name, experience, profession);
+        var carrier = new Carrier(Guid.NewGuid(), name, experience, profession, canCommunicateWithMember);
 
         return carrier;
     }

@@ -4,12 +4,24 @@ using Transportathon.Domain.Transports;
 
 namespace Transportathon.Application.Transports.AddTransportRequest;
 
-public class AddTransportRequestCommandHandler : ICommandHandler<AddTransportRequestCommand, Guid>
+internal sealed class AddTransportRequestCommandHandler : ICommandHandler<AddTransportRequestCommand, Guid>
 {
+    private readonly ITransportRequestRepository _transportRequestRepository;
+    private readonly IUnitOfWork _unitOfWork;
+
+    public AddTransportRequestCommandHandler(ITransportRequestRepository transportRequestRepository, IUnitOfWork unitOfWork)
+    {
+        _transportRequestRepository = transportRequestRepository;
+        _unitOfWork = unitOfWork;
+    }
+
     public async Task<Result<Guid>> Handle(AddTransportRequestCommand request, CancellationToken cancellationToken)
     {
-        var transport = TransportRequest.Create(request.Description, request.BeginDate, request.Type, request.Address);
+        var transportRequest = TransportRequest.Create(request.Description, request.BeginDate, request.Type, request.Address);
+        
+        await _transportRequestRepository.AddAsync(transportRequest);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return transport.Id;
+        return transportRequest.Id;
     }
 }

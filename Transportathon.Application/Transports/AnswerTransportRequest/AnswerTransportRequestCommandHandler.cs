@@ -8,12 +8,16 @@ namespace Transportathon.Application.Transports.AnswerTransportRequest;
 public class AnswerTransportRequestCommandHandler : ICommandHandler<AnswerTransportRequestCommand>
 {
     private readonly ITransportRequestRepository _transportRequestRepository;
+    private readonly ITransportRequestAnswerRepository _transportRequestAnswerRepository;
     private readonly IUserRepository _userRepository;
+    private readonly IUnitOfWork _unitOfWork;
 
-    public AnswerTransportRequestCommandHandler(ITransportRequestRepository transportRequestRepository, IUserRepository userRepository)
+    public AnswerTransportRequestCommandHandler(ITransportRequestRepository transportRequestRepository, IUserRepository userRepository, IUnitOfWork unitOfWork, ITransportRequestAnswerRepository transportRequestAnswerRepository)
     {
         _transportRequestRepository = transportRequestRepository;
         _userRepository = userRepository;
+        _unitOfWork = unitOfWork;
+        _transportRequestAnswerRepository = transportRequestAnswerRepository;
     }
 
 
@@ -34,7 +38,9 @@ public class AnswerTransportRequestCommandHandler : ICommandHandler<AnswerTransp
         }
 
         var answer = TransportRequestAnswer.Create(transportRequest, request.Price, user.Company!);
-    
+        await _transportRequestAnswerRepository.AddAsync(answer);
+        await _unitOfWork.SaveChangesAsync(cancellationToken);
+        
         return Result.Success();
     }
 }
