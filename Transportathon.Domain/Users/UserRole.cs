@@ -2,6 +2,6 @@ namespace Transportathon.Domain.Users;
 
 public enum UserRole
 {
-    Member,
-    Owner
+    Member = 1,
+    Owner = 2
 }

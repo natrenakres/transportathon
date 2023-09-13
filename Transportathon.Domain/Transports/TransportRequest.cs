@@ -23,20 +23,22 @@ public sealed class TransportRequest : Entity
     public DateTime? EstimatedEndDate { get; private set; }
 
     public TransportRequestType Type { get; private set; }
-
-    public Address Address { get; private set; }
+    public TransportRequestStatus Status { get; private set; }
+    
 
     public bool IsCompleted { get; private set; }
+    
+    public Address Address { get; private set; }
 
     public Money? Price { get; private set; }
 
     public Description Description { get; private set; }
 
-    public TransportRequestStatus Status { get; private set; }
-
     public Guid UserId { get; private set; }
 
     public List<TransportRequestAnswer> Answers { get; private set; } = new();
+    
+    
 
     public static TransportRequest Create(Description description, DateTime beginDate,
         TransportRequestType type, Address address, DateTime? estimatedEndDate = null)

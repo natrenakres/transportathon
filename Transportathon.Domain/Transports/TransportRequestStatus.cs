@@ -2,7 +2,7 @@ namespace Transportathon.Domain.Transports;
 
 public enum TransportRequestStatus
 {
-    New,
-    Accepted,
-    Booked
+    New = 1,
+    Accepted = 2,
+    Booked = 3
 }

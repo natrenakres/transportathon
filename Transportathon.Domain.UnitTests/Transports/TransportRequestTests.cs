@@ -13,9 +13,10 @@ public class TransportRequestTests : BaseTest
         _company = Company.Create(new Name("1&1 Tasima"), new Logo("logo.png"), 
             new Email("1-1-tasima@email.com"), new Phone("01215552575"), Guid.NewGuid());
         var driver = Driver.Create(new Name("Ali Veli"), new Experience(10));
-        var vehicle = Vehicle.Create(new VehicleModel("Mercedes"), new Year(2020), VehicleType.Lorry, driver.Id,
-            new NumberPlate("34-AK-775"),
+        var vehicle = Vehicle.Create(new VehicleModel("Mercedes"), new Year(2020), VehicleType.Lorry, new NumberPlate("34-AK-775"),
             new Color("white"));
+        
+        vehicle.AddDriver(driver);
 
         var carrier1 = Carrier.Create(new Name("C1"), new Year(1), Profession.Normal, false);
         var carrier2 = Carrier.Create(new Name("C2"), new Year(2), Profession.Normal, false);

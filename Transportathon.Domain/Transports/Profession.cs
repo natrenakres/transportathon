@@ -2,7 +2,7 @@ namespace Transportathon.Domain.Transports;
 
 public enum Profession
 {
-    Normal,
-    Carpenter,
-    Installer
+    Normal = 1,
+    Carpenter = 2,
+    Installer = 3
 }

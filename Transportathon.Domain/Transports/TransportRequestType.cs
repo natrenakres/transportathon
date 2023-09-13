@@ -2,8 +2,8 @@ namespace Transportathon.Domain.Transports;
 
 public enum TransportRequestType
 {
-    HomeToHome,
-    OfficeTransport,
-    BigVolumeAndHeavy
+    HomeToHome = 1,
+    OfficeTransport = 2,
+    BigVolumeAndHeavy = 3
     
 }

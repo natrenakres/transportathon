@@ -2,8 +2,8 @@ namespace Transportathon.Domain.Transports;
 
 public enum VehicleType
 {
-    Lorry, // Kamyon
-    Truck, // Tir
-    Van // Kamyonet
+    Lorry = 1, // Kamyon
+    Truck = 2, // Tir
+    Van = 3 // Kamyonet
     
 }
