@@ -31,7 +31,7 @@ internal sealed class AcceptRequestAnswerCommandHandler : ICommandHandler<Accept
 
         if (answer is null)
         {
-            return Result.Failure<TransportRequestStatus>(TransportRequestErrors.NotFound);
+            return Result.Failure<TransportRequestStatus>(TransportRequestAnswerErrors.NotFound);
         }
 
         transportRequest.Accept(request.TransportRequestAnswerId, answer.Price);

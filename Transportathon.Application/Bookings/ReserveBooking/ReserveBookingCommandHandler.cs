@@ -30,6 +30,7 @@ internal sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBook
             return Result.Failure<TransportRequestStatus>(TransportRequestErrors.NotFound);
         }
 
+        transportRequest.SetBooked();
         var answer = transportRequest.Answers.FirstOrDefault(c => c.IsAcceptedFromMember);
 
         if (answer is null)

@@ -21,9 +21,9 @@ public sealed class TransportRequestAnswer : Entity
 
     public bool IsAcceptedFromMember { get; private set; }
 
-    public static TransportRequestAnswer Create(TransportRequest request, Money price, Company company)
+    public static TransportRequestAnswer Create(TransportRequest request, Money price, Guid companyId)
     {
-        var requestAnswer = new TransportRequestAnswer(Guid.NewGuid(), request.Id, company.Id, price);
+        var requestAnswer = new TransportRequestAnswer(Guid.NewGuid(), request.Id, companyId, price);
         
         request.Answers.Add(requestAnswer);
 

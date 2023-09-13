@@ -52,7 +52,7 @@ public class TransportRequestTests : BaseTest
         var transportRequest = TransportRequest.Create(description, beginDate, TransportRequestType.HomeToHome, address);
         
         var price = new Money(100, Currency.Tl);
-        var answer = TransportRequestAnswer.Create(transportRequest, price, _company);
+        var answer = TransportRequestAnswer.Create(transportRequest, price, _company.Id);
 
 
         transportRequest.Answers.Count.Should().BeGreaterThan(0);
@@ -70,10 +70,10 @@ public class TransportRequestTests : BaseTest
         var transportRequest = TransportRequest.Create(description, beginDate, TransportRequestType.HomeToHome, address);
         
         var price1 = new Money(100, Currency.Tl);
-        var answer1 = TransportRequestAnswer.Create(transportRequest, price1, _company);
+        var answer1 = TransportRequestAnswer.Create(transportRequest, price1, _company.Id);
 
         var price2 = new Money(120, Currency.Tl);
-        TransportRequestAnswer.Create(transportRequest, price2, _company);
+        TransportRequestAnswer.Create(transportRequest, price2, _company.Id);
 
 
         transportRequest.Accept(answer1.Id, price1);
@@ -95,10 +95,10 @@ public class TransportRequestTests : BaseTest
         var transportRequest = TransportRequest.Create(description, beginDate, TransportRequestType.HomeToHome, address);
         
         var price1 = new Money(100, Currency.Tl);
-        var answer1 = TransportRequestAnswer.Create(transportRequest, price1, _company);
+        var answer1 = TransportRequestAnswer.Create(transportRequest, price1, _company.Id);
 
         var price2 = new Money(120, Currency.Tl);
-        TransportRequestAnswer.Create(transportRequest, price2, _company);
+        TransportRequestAnswer.Create(transportRequest, price2, _company.Id);
         transportRequest.Accept(answer1.Id, price1);
 
 

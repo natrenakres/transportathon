@@ -1,4 +1,5 @@
 using Transportathon.Application.Abstractions.Messaging;
+using Transportathon.Application.Exceptions;
 using Transportathon.Domain.Abstractions;
 using Transportathon.Domain.Transports;
 using Transportathon.Domain.Users;
@@ -32,15 +33,19 @@ public class AnswerTransportRequestCommandHandler : ICommandHandler<AnswerTransp
 
         var user = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
 
-        if (user?.Company is null)
+        if (user?.CompanyId is null)
         {
             return Result.Failure(UserErrors.NotFound);
         }
 
-        var answer = TransportRequestAnswer.Create(transportRequest, request.Price, user.Company!);
+        var answer = TransportRequestAnswer.Create(transportRequest, request.Price, user.CompanyId ?? throw new ValidationException(new []
+        {
+            new ValidationError(nameof(user.CompanyId), "User must have a company for answer the transport request")
+        }));
+        
         await _transportRequestAnswerRepository.AddAsync(answer);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        
+
         return Result.Success();
     }
 }

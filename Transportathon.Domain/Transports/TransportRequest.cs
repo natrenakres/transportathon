@@ -16,6 +16,8 @@ public sealed class TransportRequest : Entity
         Address = address;
     }
 
+    
+
     public DateTime BeginDate { get; private set; }
 
     public DateTime? EstimatedEndDate { get; private set; }
@@ -65,4 +67,9 @@ public sealed class TransportRequest : Entity
         Status = status;
     }
 
+
+    public void SetBooked()
+    {
+        ChangeStatus(TransportRequestStatus.Booked);
+    }
 }

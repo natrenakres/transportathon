@@ -93,7 +93,7 @@ public class ReserveBookingTests
 
         var transportRequest = TransportRequest.Create(description, beginDate, TransportRequestType.HomeToHome, address);
         var price = new Money(100, Currency.Tl);
-        var answer = TransportRequestAnswer.Create(transportRequest, price, _company);
+        var answer = TransportRequestAnswer.Create(transportRequest, price, _company.Id);
         
         answer.SetIsAccepted();
 

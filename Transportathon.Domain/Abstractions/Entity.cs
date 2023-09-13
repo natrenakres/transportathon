@@ -8,7 +8,6 @@ public abstract class Entity :IEntity
     {
         Id = id;
     }
-
     public Guid Id { get; init; }
 
     public IReadOnlyList<IDomainEvent> GetDomainEvents()
