@@ -17,6 +17,9 @@ public class TransportRequestConfiguration : IEntityTypeConfiguration<TransportR
         
         builder.OwnsOne(request => request.Price, priceBuilder =>
         {
+            priceBuilder.Property(money => money.Amount)
+                .HasColumnType("decimal(18,4)");
+            
             priceBuilder.Property(money => money.Currency)
                 .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
         });

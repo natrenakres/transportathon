@@ -29,9 +29,7 @@ public class UserConfiguration : IEntityTypeConfiguration<User>
 
         builder.HasIndex(user => user.Email).IsUnique();
 
-        builder.HasOne<Company>()
-            .WithMany()
-            .HasForeignKey(user => user.CompanyId);
+       
 
 
     }

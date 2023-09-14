@@ -14,9 +14,6 @@ public class CompanyConfiguration : IEntityTypeConfiguration<Company>
 
         builder.HasKey(c => c.Id);
 
-        builder.HasOne<User>()
-            .WithOne(k => k.Company);
-        
         builder.Property(company => company.Name)
             .HasMaxLength(200)
             .HasConversion(name => name.Value, value => new Name(value));

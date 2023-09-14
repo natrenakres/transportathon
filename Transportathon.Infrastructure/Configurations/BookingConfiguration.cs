@@ -16,11 +16,6 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
         
         builder.Property<uint>("Version").IsRowVersion();
 
-
-        builder.HasOne<User>()
-            .WithMany()
-            .HasForeignKey(booking => booking.UserId);
-
         builder.HasOne<TransportRequest>()
             .WithMany()
             .HasForeignKey(booking => booking.RequestId);
