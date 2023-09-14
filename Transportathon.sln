@@ -14,6 +14,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transportathon.Application.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transportathon.Infrastructure", "Transportathon.Infrastructure\Transportathon.Infrastructure.csproj", "{4DA79C61-DF3C-424F-B78B-3304FED85DD5}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Transportathon.Api", "Transportathon.Api\Transportathon.Api.csproj", "{03FEAB26-E83C-4DD8-8B9B-F1F77FE799BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,6 +27,7 @@ Global
 		{270679C5-53AB-4255-950F-CD191E6890BF} = {072E16C4-DD61-419D-B56C-157CE46C8A57}
 		{6A6011C3-3C66-4639-9E45-0DB3C61A40AB} = {6ACDE413-CD4C-4194-B790-A6EDDB539BEB}
 		{4DA79C61-DF3C-424F-B78B-3304FED85DD5} = {072E16C4-DD61-419D-B56C-157CE46C8A57}
+		{03FEAB26-E83C-4DD8-8B9B-F1F77FE799BE} = {072E16C4-DD61-419D-B56C-157CE46C8A57}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{DB10A984-58F4-4025-AB5F-7BA100D01647}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -47,5 +50,9 @@ Global
 		{4DA79C61-DF3C-424F-B78B-3304FED85DD5}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4DA79C61-DF3C-424F-B78B-3304FED85DD5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4DA79C61-DF3C-424F-B78B-3304FED85DD5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{03FEAB26-E83C-4DD8-8B9B-F1F77FE799BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03FEAB26-E83C-4DD8-8B9B-F1F77FE799BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{03FEAB26-E83C-4DD8-8B9B-F1F77FE799BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03FEAB26-E83C-4DD8-8B9B-F1F77FE799BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
