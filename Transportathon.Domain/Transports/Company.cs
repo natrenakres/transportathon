@@ -16,6 +16,8 @@ public sealed class Company : Entity
         UserId = userId;
     }
 
+    private Company() { }
+
     public Name Name { get; private set; }
 
     public Logo Logo { get; private set; }
@@ -25,6 +27,8 @@ public sealed class Company : Entity
     public Phone Phone { get; private set; }
 
     public Guid UserId { get; private set; }
+
+    public User User { get; set; } = null!;
 
     public List<Vehicle> Vehicles { get; private set; } = new();
 

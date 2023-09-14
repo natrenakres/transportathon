@@ -1,0 +1,31 @@
+﻿version: '3.4'
+
+services:
+  transportathon.api:
+    image: transportathon.api
+    container_name: Transportathon.Api
+    build:
+      context: .
+      dockerfile: Transportathon.Api/Dockerfile
+    depends_on: 
+      - transportathon-db
+    networks:
+      - transportathon_net
+
+  transportathon-db:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    container_name: Transportathon.Db
+    environment:
+      - MSSQL_SA_PASSWORD=1q2w3e4R!
+      - ACCEPT_EULA=Y
+    volumes:
+      - ./.containers/database/data:/var/opt/mssql/data
+      - ./.containers/database/log:/var/opt/mssql/log
+      - ./.containers/database/secrets:/var/opt/mssql/secrets
+    ports:
+      - "1433:1433"
+    networks:
+      - transportathon_net
+networks:
+  transportathon_net:
+    driver: bridge

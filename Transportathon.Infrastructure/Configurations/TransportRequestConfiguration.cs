@@ -27,9 +27,6 @@ public class TransportRequestConfiguration : IEntityTypeConfiguration<TransportR
         builder.Property(apartment => apartment.Description)
             .HasMaxLength(2000)
             .HasConversion(description => description.Value, value => new Description(value));
-
         
-        
-        builder.Property<uint>("Version").IsRowVersion();
     }
 }

@@ -42,8 +42,7 @@ namespace Transportathon.Infrastructure.Migrations
                     Price_Amount = table.Column<decimal>(type: "decimal(18,4)", nullable: true),
                     Price_Currency = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Description = table.Column<string>(type: "nvarchar(2000)", maxLength: 2000, nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Version = table.Column<long>(type: "bigint", rowVersion: true, nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,8 +74,7 @@ namespace Transportathon.Infrastructure.Migrations
                     Price_Amount = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     Price_Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     IsAcceptedFromMember = table.Column<bool>(type: "bit", nullable: false),
-                    TransportRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Version = table.Column<long>(type: "bigint", rowVersion: true, nullable: false)
+                    TransportRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -177,8 +175,7 @@ namespace Transportathon.Infrastructure.Migrations
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Status = table.Column<int>(type: "int", nullable: false),
                     BeginDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    EstimatedEndDate = table.Column<DateTime>(type: "datetime2", nullable: true),
-                    Version = table.Column<long>(type: "bigint", rowVersion: true, nullable: false)
+                    EstimatedEndDate = table.Column<DateTime>(type: "datetime2", nullable: true)
                 },
                 constraints: table =>
                 {

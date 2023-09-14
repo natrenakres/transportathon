@@ -7,15 +7,17 @@ namespace Transportathon.Domain.Transports;
 public sealed class TransportRequest : Entity
 {
     public TransportRequest(Guid id, Description description, DateTime beginDate,
-        TransportRequestType type, Address address, DateTime? estimatedEndDate) : base(id)
+        TransportRequestType type, Address address, TransportRequestStatus status, DateTime? estimatedEndDate) : base(id)
     {
         Description = description;
         BeginDate = beginDate;
         Type = type;
         EstimatedEndDate = estimatedEndDate;
         Address = address;
+        Status = status;
     }
 
+    private TransportRequest() { }
     
 
     public DateTime BeginDate { get; private set; }
@@ -44,7 +46,7 @@ public sealed class TransportRequest : Entity
         TransportRequestType type, Address address, DateTime? estimatedEndDate = null)
     {
         var transportRequest = new TransportRequest(Guid.NewGuid(), description,
-            beginDate, type, address, estimatedEndDate);
+            beginDate, type, address, TransportRequestStatus.New, estimatedEndDate);
 
         return transportRequest;
     }

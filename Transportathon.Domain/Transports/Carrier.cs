@@ -13,6 +13,8 @@ public sealed class Carrier : Entity
         CanCommunicateWithMember = canCommunicateWithMember;
     }
 
+    private Carrier() { }
+
     public Name Name { get;  private set; }
 
     public bool CanCommunicateWithMember { get; private set; }

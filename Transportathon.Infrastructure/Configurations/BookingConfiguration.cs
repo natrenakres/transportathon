@@ -13,8 +13,6 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
         builder.ToTable("Bookings");
 
         builder.HasKey(b => b.Id);
-        
-        builder.Property<uint>("Version").IsRowVersion();
 
         builder.HasOne<TransportRequest>()
             .WithMany()

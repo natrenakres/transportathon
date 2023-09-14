@@ -1,4 +1,5 @@
 using Transportathon.Domain.Abstractions;
+using Transportathon.Domain.Users;
 
 namespace Transportathon.Domain.Bookings;
 
@@ -24,7 +25,7 @@ public sealed class Booking : Entity
         EstimatedEndDate = estimatedEndDate;
     }
 
-    
+    private Booking() { }
 
     public Guid RequestId { get; private set; }
 
@@ -33,7 +34,8 @@ public sealed class Booking : Entity
     public Guid VehicleId { get; private set; }
 
     public Guid CarrierId { get; private set; }
-    public Guid UserId { get; private set; }
+    public Guid? UserId { get; private set; }
+    public User? User { get; private set; }
     public BookingStatus Status { get; private set; }
     
     public DateTime BeginDate { get; private set; }

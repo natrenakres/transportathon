@@ -127,7 +127,7 @@ public class AnswerTransportRequestTests
         var price = new Money(100, Currency.Tl);
         var command = new AnswerTransportRequestCommand(Guid.NewGuid(), price, Guid.NewGuid());
 
-        var user = User.Create(new Name("Ali"), new Email("s@s.com"), new Phone("555650252"), UserRole.Owner, _company.Id);
+        var user = User.Create(new Name("Ali"), new Email("s@s.com"), new Phone("555650252"), UserRole.Owner, _company);
         
         var userRepositoryMock = new Mock<IUserRepository>();
         userRepositoryMock.Setup(u => u.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))

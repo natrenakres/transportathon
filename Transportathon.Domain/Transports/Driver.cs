@@ -11,6 +11,8 @@ public sealed class Driver : Entity
         Experience = experience;
     }
 
+    private Driver() { }
+
     public Name Name { get; private set; }
 
     public Experience Experience { get; private set; }

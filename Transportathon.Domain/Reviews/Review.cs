@@ -24,6 +24,8 @@ public sealed class Review : Entity
         CreatedOnUtc = createdOnUtc;
     }
 
+    private Review() { }
+
     public Guid RequestId { get; private set; }
 
     public Guid BookingId { get; private set; }
@@ -51,7 +53,7 @@ public sealed class Review : Entity
             Guid.NewGuid(),
             booking.RequestId,
             booking.Id,
-            booking.UserId,
+            booking.UserId!.Value,
             rating,
             comment,
             createdOnUtc);

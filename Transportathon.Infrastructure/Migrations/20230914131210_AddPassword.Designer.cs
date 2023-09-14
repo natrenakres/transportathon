@@ -12,8 +12,8 @@ using Transportathon.Infrastructure;
 namespace Transportathon.Infrastructure.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20230914095739_CreateDatabase")]
-    partial class CreateDatabase
+    [Migration("20230914131210_AddPassword")]
+    partial class AddPassword
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,11 +54,6 @@ namespace Transportathon.Infrastructure.Migrations
 
                     b.Property<Guid>("VehicleId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -192,11 +187,6 @@ namespace Transportathon.Infrastructure.Migrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<long>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bigint");
-
                     b.HasKey("Id");
 
                     b.ToTable("TransportRequests", (string)null);
@@ -219,11 +209,6 @@ namespace Transportathon.Infrastructure.Migrations
 
                     b.Property<Guid?>("TransportRequestId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<long>("Version")
-                        .IsConcurrencyToken()
-                        .ValueGeneratedOnAddOrUpdate()
-                        .HasColumnType("bigint");
 
                     b.HasKey("Id");
 
@@ -292,6 +277,10 @@ namespace Transportathon.Infrastructure.Migrations
                         .IsRequired()
                         .HasMaxLength(200)
                         .HasColumnType("nvarchar(200)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Phone")
                         .IsRequired()

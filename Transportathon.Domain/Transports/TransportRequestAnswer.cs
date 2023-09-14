@@ -12,6 +12,7 @@ public sealed class TransportRequestAnswer : Entity
         CompanyId = companyId;
     }
 
+    private TransportRequestAnswer() { }
 
     public Guid RequestId { get; private set; }
 

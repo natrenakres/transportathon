@@ -13,6 +13,8 @@ public sealed class Vehicle : Entity
         Type = type;
     }
 
+    private Vehicle() { }
+
     public VehicleModel Model { get; private set; }
 
     public Year Year { get; private set; }

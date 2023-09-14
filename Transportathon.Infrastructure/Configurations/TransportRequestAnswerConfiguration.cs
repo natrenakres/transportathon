@@ -25,7 +25,5 @@ public class TransportRequestAnswerConfiguration : IEntityTypeConfiguration<Tran
         builder.HasOne<TransportRequest>()
             .WithMany()
             .HasForeignKey(k => k.RequestId);
-        
-        builder.Property<uint>("Version").IsRowVersion();
     }
 }

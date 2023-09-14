@@ -33,15 +33,12 @@ public class AnswerTransportRequestCommandHandler : ICommandHandler<AnswerTransp
 
         var user = await _userRepository.GetByIdAsync(request.UserId, cancellationToken);
 
-        if (user?.CompanyId is null)
+        if (user?.Company is null)
         {
             return Result.Failure(UserErrors.NotFound);
         }
 
-        var answer = TransportRequestAnswer.Create(transportRequest, request.Price, user.CompanyId ?? throw new ValidationException(new []
-        {
-            new ValidationError(nameof(user.CompanyId), "User must have a company for answer the transport request")
-        }));
+        var answer = TransportRequestAnswer.Create(transportRequest, request.Price, user.Company.Id);
         
         await _transportRequestAnswerRepository.AddAsync(answer);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
