@@ -1,7 +1,28 @@
-import { Navbar, Nav, Container, Badge, NavDropdown } from 'react-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
+import { FaUser } from 'react-icons/fa';
 import { LinkContainer } from 'react-router-bootstrap';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { useLogoutMutation } from '../slices/user.api.slice';
+import { logout } from '../slices/auth.slice';
 
 const Header = () => {
+    const { userInfo } = useSelector(state => state.auth);
+
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const [logoutApiCall, { isLoading }] = useLogoutMutation();
+
+    const logoutHandler = async () => {
+        try {
+            await logoutApiCall().unwrap();
+            dispatch(logout());
+            navigate('/login');
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
 
     return (
         <header>
@@ -13,21 +34,39 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ms-auto">
-                            <Nav.Link href="/about">About</Nav.Link>
+                            <Nav.Link href="/transport-requests">Transport Requests</Nav.Link>
                             <Nav.Link href="/contact">Contact</Nav.Link>
-                            <NavDropdown title="Dropdown" id="basic-nav-dropdown">
-                                <NavDropdown.Item href="/dropdown1">Dropdown 1</NavDropdown.Item>
-                                <NavDropdown.Item href="/dropdown2">Dropdown 2</NavDropdown.Item>
-                                <NavDropdown.Item href="/dropdown3">Dropdown 3</NavDropdown.Item>
-                                <NavDropdown.Divider />
-                                <NavDropdown.Item href="/dropdown4">Dropdown 4</NavDropdown.Item>
-                            </NavDropdown>
-                        </Nav>
-                        <Nav className="ml-auto">                            
-                            <Nav.Link href="/login">
-                                <i className="fas fa-user"></i> Sign In
-                            </Nav.Link>
-                        </Nav>
+                            { userInfo ? (
+                                <>
+                                    <NavDropdown title={userInfo.name} id="username">
+                                        <LinkContainer to='/profile'>
+                                            <NavDropdown.Item>Profile</NavDropdown.Item>
+                                        </LinkContainer>                                    
+                                        <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
+                                    </NavDropdown>
+                                    {
+                                        userInfo.isAdmin && (
+                                            <>
+                                                <NavDropdown title='Admin' id="admin">
+                                                    <LinkContainer to='/admin/product-list'>
+                                                        <NavDropdown.Item>Products</NavDropdown.Item>
+                                                    </LinkContainer>
+                                                    <LinkContainer to='/admin/order-list'>                                                                        
+                                                        <NavDropdown.Item>Orders</NavDropdown.Item>
+                                                    </LinkContainer>
+                                                    <LinkContainer to='/admin/user-list'>                                                                        
+                                                        <NavDropdown.Item>Users</NavDropdown.Item>
+                                                    </LinkContainer>
+                                                </NavDropdown>
+                                            </>
+                                            )
+                                    }                                    
+                                </>
+
+                            ) : (<LinkContainer to='/login'>
+                                <Nav.Link href="/login"><FaUser /> Sign In</Nav.Link>
+                            </LinkContainer>)}                            
+                        </Nav>                        
                     </Navbar.Collapse>
                 </Container>
             </Navbar>
