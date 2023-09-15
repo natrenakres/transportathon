@@ -17,6 +17,7 @@ public sealed class TransportRequestAnswer : Entity
     public Guid RequestId { get; private set; }
 
     public Guid CompanyId { get; private set; }
+    public Company Company { get; private set; }
 
     public Money Price { get; private set; }
 

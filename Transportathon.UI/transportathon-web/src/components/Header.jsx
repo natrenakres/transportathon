@@ -11,7 +11,7 @@ const Header = () => {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
-    const [logoutApiCall, { isLoading }] = useLogoutMutation();
+    const [logoutApiCall] = useLogoutMutation();
 
     const logoutHandler = async () => {
         try {
@@ -34,38 +34,21 @@ const Header = () => {
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ms-auto">
-                            <Nav.Link href="/transport-requests">Transport Requests</Nav.Link>
-                            <Nav.Link href="/contact">Contact</Nav.Link>
+                            <Nav.Link href="/transport/requests">Transport Requests</Nav.Link>
+                            <Nav.Link href="/bookings/list">Bookings</Nav.Link>                            
                             { userInfo ? (
                                 <>
-                                    <NavDropdown title={userInfo.name} id="username">
-                                        <LinkContainer to='/profile'>
-                                            <NavDropdown.Item>Profile</NavDropdown.Item>
-                                        </LinkContainer>                                    
+                                    <NavDropdown title={userInfo.name} id="username">                                                                            
                                         <NavDropdown.Item onClick={logoutHandler}>Logout</NavDropdown.Item>
-                                    </NavDropdown>
-                                    {
-                                        userInfo.isAdmin && (
-                                            <>
-                                                <NavDropdown title='Admin' id="admin">
-                                                    <LinkContainer to='/admin/product-list'>
-                                                        <NavDropdown.Item>Products</NavDropdown.Item>
-                                                    </LinkContainer>
-                                                    <LinkContainer to='/admin/order-list'>                                                                        
-                                                        <NavDropdown.Item>Orders</NavDropdown.Item>
-                                                    </LinkContainer>
-                                                    <LinkContainer to='/admin/user-list'>                                                                        
-                                                        <NavDropdown.Item>Users</NavDropdown.Item>
-                                                    </LinkContainer>
-                                                </NavDropdown>
-                                            </>
-                                            )
-                                    }                                    
+                                    </NavDropdown>                                                                      
                                 </>
 
-                            ) : (<LinkContainer to='/login'>
-                                <Nav.Link href="/login"><FaUser /> Sign In</Nav.Link>
-                            </LinkContainer>)}                            
+                            ) : (
+                                    <LinkContainer to='/login'>
+                                        <Nav.Link href="/login"><FaUser /> Sign In</Nav.Link>
+                                    </LinkContainer>
+                                )
+                            }
                         </Nav>                        
                     </Navbar.Collapse>
                 </Container>

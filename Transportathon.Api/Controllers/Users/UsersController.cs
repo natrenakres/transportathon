@@ -47,17 +47,13 @@ public class UsersController : ControllerBase
         {
             return Unauthorized(result.Error);
         }
-
-        var token = result.Value.AccessToken;
         
-        Response.Cookies.Append("jwt", token, new CookieOptions()
-        {
-            HttpOnly = true, 
-            SameSite = SameSiteMode.Strict,
-            MaxAge = TimeSpan.FromDays(30),
-            Secure = false
-        });
+        return Ok(result.Value);
+    }
 
+    [HttpPost("logout")]
+    public IActionResult LogOut()
+    {
         return Ok();
     }
 }

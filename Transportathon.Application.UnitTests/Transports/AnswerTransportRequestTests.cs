@@ -43,7 +43,7 @@ public class AnswerTransportRequestTests
         transportRepositoryMock.Setup(u => u.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((TransportRequest?)null);
         var price = new Money(100, Currency.Tl);
-        var command = new AnswerTransportRequestCommand(Guid.NewGuid(), price, Guid.NewGuid());
+        var command = new AnswerTransportRequestCommand(Guid.NewGuid(), price);
 
         var handle = new AnswerTransportRequestCommandHandler(transportRepositoryMock.Object,
             new Mock<IUserRepository>().Object, new Mock<IUnitOfWork>().Object,
@@ -68,7 +68,7 @@ public class AnswerTransportRequestTests
         transportRepositoryMock.Setup(u => u.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(transportRequest);
         var price = new Money(100, Currency.Tl);
-        var command = new AnswerTransportRequestCommand(Guid.NewGuid(), price, Guid.NewGuid());
+        var command = new AnswerTransportRequestCommand(Guid.NewGuid(), price);
         var userRepositoryMock = new Mock<IUserRepository>();
         userRepositoryMock.Setup(u => u.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync((User?)null);
@@ -95,9 +95,9 @@ public class AnswerTransportRequestTests
         transportRepositoryMock.Setup(u => u.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(transportRequest);
         var price = new Money(100, Currency.Tl);
-        var command = new AnswerTransportRequestCommand(Guid.NewGuid(), price, Guid.NewGuid());
+        var command = new AnswerTransportRequestCommand(Guid.NewGuid(), price);
 
-        var user = User.Create(new Name("Ali"), new Email("s@s.com"), new Phone("555650252"), UserRole.Owner, null);
+        var user = User.Create(new Name("Ali"), new Email("s@s.com"), new Phone("555650252"), "123456", UserRole.Owner, null);
         
         var userRepositoryMock = new Mock<IUserRepository>();
         userRepositoryMock.Setup(u => u.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
@@ -125,9 +125,9 @@ public class AnswerTransportRequestTests
         transportRepositoryMock.Setup(u => u.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(transportRequest);
         var price = new Money(100, Currency.Tl);
-        var command = new AnswerTransportRequestCommand(Guid.NewGuid(), price, Guid.NewGuid());
+        var command = new AnswerTransportRequestCommand(Guid.NewGuid(), price);
 
-        var user = User.Create(new Name("Ali"), new Email("s@s.com"), new Phone("555650252"), UserRole.Owner, _company);
+        var user = User.Create(new Name("Ali"), new Email("s@s.com"), new Phone("555650252"), "123456", UserRole.Owner, _company);
         
         var userRepositoryMock = new Mock<IUserRepository>();
         userRepositoryMock.Setup(u => u.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))

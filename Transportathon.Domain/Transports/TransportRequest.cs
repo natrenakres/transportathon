@@ -76,4 +76,9 @@ public sealed class TransportRequest : Entity
     {
         ChangeStatus(TransportRequestStatus.Booked);
     }
+
+    public void AddUser(Guid userId)
+    {
+        UserId = userId;
+    }
 }

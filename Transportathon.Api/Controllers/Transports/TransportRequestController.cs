@@ -2,8 +2,11 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Transportathon.Application.Transports.AddTransportRequest;
+using Transportathon.Application.Transports.AnswerTransportRequest;
 using Transportathon.Application.Transports.GetAllTransportRequest;
 using Transportathon.Application.Transports.GetTransportRequest;
+using Transportathon.Application.Transports.GetTransportRequestAnswers;
+using Transportathon.Domain.Shared;
 using Transportathon.Domain.Transports;
 
 namespace Transportathon.Api.Controllers.Transports;
@@ -25,6 +28,11 @@ public class TransportRequestController : ControllerBase
     {
         var query = new GetAllTransportRequestQuery();
         var results = await _sender.Send(query, cancellationToken);
+
+        if (results.IsFailure)
+        {
+            return BadRequest(results.Error);
+        }
 
         return Ok(results.Value);
     }
@@ -69,5 +77,37 @@ public class TransportRequestController : ControllerBase
         }
 
         return CreatedAtAction(nameof(GetTransportRequest), new { id = result.Value }, result.Value);
+    }
+
+
+    [HttpPost("{requestId:guid}/answer")]
+    public async Task<IActionResult> AnswerTransportRequest(Guid requestId, AnswerTransportRequest answer)
+    {
+        var command = new AnswerTransportRequestCommand(requestId,
+            new Money(answer.Amount, Currency.FromCode(answer.Currency)));
+
+        var result = await _sender.Send(command);
+
+        if (result.IsFailure)
+        {
+            return BadRequest(result.Error);
+        }
+
+        return Ok();
+    }
+
+    [HttpGet("{requestId:guid}/answers")]
+    public async Task<IActionResult> GetTransportRequestAnswers(Guid requestId, CancellationToken cancellationToken)
+    {
+        var query = new GetTransportRequestAnswersQuery(requestId);
+
+        var result = await _sender.Send(query, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return BadRequest(result.Error);
+        }
+
+        return Ok(result.Value);
     }
 }

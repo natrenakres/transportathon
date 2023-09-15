@@ -15,4 +15,21 @@ public class TransportRequestRepository : Repository<TransportRequest>, ITranspo
             .Set<TransportRequest>()
             .ToListAsync(cancellationToken);
     }
+
+    public async Task<TransportRequest?> GetByUserIdAsync(Guid requestId, Guid userId, CancellationToken cancellationToken = default)
+    {
+        return await DbContext.Set<TransportRequest>()
+            .Include(r => r.Answers).ThenInclude(a => a.Company)
+            .FirstOrDefaultAsync(r => (r.UserId == userId &&
+                                       r.Id == requestId), cancellationToken);
+    }
+    
+    public async Task<List<TransportRequest>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
+    {
+        return await DbContext.Set<TransportRequest>()
+            .Include(r => r.Answers).ThenInclude(a => a.Company)
+            .Where(r => r.UserId == userId)
+            .ToListAsync(cancellationToken);
+
+    }
 }

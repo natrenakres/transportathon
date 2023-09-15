@@ -9,5 +9,5 @@ public interface IAuthenticationService
         string email, string password,
         CancellationToken cancellationToken = default);
 
-    Result<string> GetAccessTokenAsync(Guid userId, string name, string email,  bool hasCompany);
+    Result<string> GetAccessTokenAsync(Guid userId, string name, string email,  UserRole role);
 }

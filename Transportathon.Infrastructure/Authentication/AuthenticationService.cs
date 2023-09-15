@@ -37,7 +37,7 @@ public class AuthenticationService : IAuthenticationService
         return user;
     }
 
-    public Result<string> GetAccessTokenAsync(Guid userId, string name, string email, bool hasCompany)
+    public Result<string> GetAccessTokenAsync(Guid userId, string name, string email, UserRole role)
     {
         var securityKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(_authOptions.Secret));
         var signinCredentials = new SigningCredentials(securityKey, SecurityAlgorithms.HmacSha256);
@@ -45,18 +45,26 @@ public class AuthenticationService : IAuthenticationService
         {
             new("sub", userId.ToString()),
             new("given_name", name),
-            new("email", email),
-            new("role", UserRole.Member.ToString()),
+            new("email", email)
         };
 
-        if (hasCompany)
+        switch (role)
         {
-            claims.Add(new("role", UserRole.Owner.ToString()));
+            case UserRole.Owner:
+                claims.Add(new("role", "owner"));    
+                break;
+            case UserRole.Member:
+                claims.Add(new("role", "member"));
+                break;
+            default:
+                throw new ArgumentOutOfRangeException(nameof(role), role, null);
         }
+
 
         var securityToken = new JwtSecurityToken(_authOptions.Issuer, _authOptions.Audience, claims, DateTime.Now,
             DateTime.Now.AddMonths(1), signinCredentials);
         var tokenHandler = new JwtSecurityTokenHandler();
+        tokenHandler.InboundClaimTypeMap.Clear();
         var token = tokenHandler.WriteToken(securityToken);
 
         return token;

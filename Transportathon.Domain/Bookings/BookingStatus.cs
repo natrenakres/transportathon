@@ -7,5 +7,5 @@ public enum BookingStatus
     CancelledByCompany = 3,
     CancelledByUser = 4,
     Delivered = 5,
-    Completed = 6
+    Completed = 6 
 }

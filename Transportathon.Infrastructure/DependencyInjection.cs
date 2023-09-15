@@ -53,21 +53,6 @@ public static class DependencyInjection
                     ValidAudience = authOptions.Audience,
                     IssuerSigningKey = new SymmetricSecurityKey(Encoding.ASCII.GetBytes(authOptions.Secret))
                 };
-
-                if (options.Events != null)
-                {
-                    options.Events.OnMessageReceived = context =>
-                    {
-                        if (context.Request.Cookies.ContainsKey("jwt"))
-                        {
-                            context.Token = context.Request.Cookies["jwt"];
-                        }
-
-                        return Task.CompletedTask;
-                    };    
-                }
-                
-                
             });
 
         services.AddScoped<IAuthenticationService, AuthenticationService>();

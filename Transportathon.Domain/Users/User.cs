@@ -7,13 +7,14 @@ namespace Transportathon.Domain.Users;
 
 public sealed class User : Entity
 {
-    public User(Guid id, Name name, Email email, Phone phone, UserRole role, Company? company) : base(id)
+    public User(Guid id, Name name, Email email, Phone phone, string password, UserRole role, Company? company) : base(id)
     {
         Name = name;
         Email = email;
         Phone = phone;
         Role = role;
         Company = company;
+        Password = password;
     }
 
     private User() { }
@@ -28,9 +29,9 @@ public sealed class User : Entity
 
     public List<Booking> Bookings { get; private set; } = new();
 
-    public static User Create(Name name, Email email, Phone phone, UserRole role, Company? company = null)
+    public static User Create(Name name, Email email, Phone phone, string password, UserRole role, Company? company = null)
     {
-        var user = new User(Guid.NewGuid(), name, email, phone, role, company);
+        var user = new User(Guid.NewGuid(), name, email, phone,  password, role, company);
 
 
         return user;

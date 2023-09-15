@@ -27,11 +27,13 @@ internal sealed class LogInUserCommandHandler : ICommandHandler<LogInUserCommand
         }
 
         var user = validateCredentialResult.Value;
-        
-        var result = _authenticationService.GetAccessTokenAsync(user.Id, user.Name.Value, request.Email,  user.Company != null);
+
+        var result = _authenticationService.GetAccessTokenAsync(user.Id, user.Name.Value, request.Email,  user.Role);
+
+        var isOwner = user.Role == UserRole.Owner;
 
         return result.IsFailure ? 
             Result.Failure<AccessTokenResponse>(UserErrors.InvalidCredentials) : 
-            new AccessTokenResponse(result.Value);
+            new AccessTokenResponse(result.Value, user.Name.Value, isOwner);
     }
 }

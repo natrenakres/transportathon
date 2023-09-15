@@ -13,6 +13,12 @@ import './assets/styles/bootstrap.custom.css';
 
 import App from './App';
 import HomePage from "./pages/HomePage";
+import AddTransportRequestsPage from "./pages/AddTransportRequestPage";
+import TransportRequestsPage from "./pages/TransportRequestsPage";
+import AnswerTransportRequestPage from "./pages/AnswerTransportRequestPage";
+import LoginPage from "./pages/LoginPage";
+
+import PrivateRoute from './components/PrivateRoute';
 
 import reportWebVitals from './reportWebVitals';
 
@@ -22,6 +28,13 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<App />} >
       <Route index={true} path="/" element={<HomePage />} />
+      <Route path="/login" element={<LoginPage />} />
+      <Route path='' element={<PrivateRoute />}>
+          <Route path="/transport/requests" element={<TransportRequestsPage />} />
+          <Route path="/transport/requests/:id/answers/create" element={<AnswerTransportRequestPage />} />
+          <Route path="/transport/requests/create" element={<AddTransportRequestsPage />} />
+          <Route path="/bookings/list" element={<div>Bookings</div>} />          
+      </Route>
     </Route>
   ));
 

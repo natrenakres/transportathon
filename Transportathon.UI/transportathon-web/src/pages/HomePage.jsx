@@ -1,19 +1,41 @@
-import { Row, Col } from 'react-bootstrap';
+import { Row, Col, Button } from 'react-bootstrap';
+import { useNavigate, Link } from "react-router-dom";
+import { LinkContainer } from 'react-router-bootstrap';
 
 const HomePage = () => {
+    const navigate = useNavigate();
+    const createTransportRequest = () => {
+        navigate('/transport/requests/create');
+    }
+
     return (
         <>
             <h1>Transportathon</h1>
             <Row>
+                <Col>                    
+                    <p>
+                        Do you need a vehicle and team for transportation? 
+                        You can sign up to our system, create a transport request then choose a answers and wait a reservation.
+                        After that you can see your booking details.
+                    </p>
+                </Col>                
+            </Row>
+            <Row>
                 <Col>
-                    <h2>What is Transportathon?</h2>    
-                    <p>Transportathon is a hackathon for transport.</p>
-                </Col>
-                <Col>
-                    <h2>What is a hackathon?</h2>
-                    <p>A hackathon is a competition where teams of people work together to solve a problem.</p>
+                            <Button type="button" className="btn-block" 
+                                onClick={createTransportRequest}>
+                                Create Transport Request
+                            </Button>                            
                 </Col>
             </Row>
+            <Row className='mt-3'>
+                <Col>
+                    <LinkContainer to="/transport/requests/">
+                                <Button type="button" className="btn-block" >Transport Requests</Button>
+                            </LinkContainer>
+                </Col>
+            </Row>
+
         </>
     );
 

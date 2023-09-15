@@ -3,4 +3,4 @@ using Transportathon.Application.Transports.GetTransportRequest;
 
 namespace Transportathon.Application.Transports.GetAllTransportRequest;
 
-public record GetAllTransportRequestQuery() : IQuery<List<TransportRequestResponse>>;
+public record GetAllTransportRequestQuery() : BaseRequest, IQuery<List<TransportRequestResponse>>;

@@ -1,5 +1,6 @@
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
+using Transportathon.Application.Abstractions.Behaviors;
 
 namespace Transportathon.Application;
 
@@ -12,6 +13,9 @@ public static class DependencyInjection
         services.AddMediatR(configuration =>
         {
             configuration.RegisterServicesFromAssembly(assembly);
+
+            configuration.AddOpenBehavior(typeof(ValidationBehaviour<,>));
+            configuration.AddOpenBehavior(typeof(BaseBehavior<,>));
         });
 
 

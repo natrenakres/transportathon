@@ -18,6 +18,8 @@ internal sealed class AddTransportRequestCommandHandler : ICommandHandler<AddTra
     public async Task<Result<Guid>> Handle(AddTransportRequestCommand request, CancellationToken cancellationToken)
     {
         var transportRequest = TransportRequest.Create(request.Description, request.BeginDate, request.Type, request.Address);
+
+        transportRequest.AddUser(request.UserId);
         
         await _transportRequestRepository.AddAsync(transportRequest);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
