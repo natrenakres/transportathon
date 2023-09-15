@@ -18,9 +18,7 @@ const AddTransportRequestPage = () => {
     const [zip, setZip] = useState('');
     const [country, setCountry] = useState('');
 
-    const [addTransportRequest, { isLoading, error, isSuccess }] = useAddTransportRequestMutation();
-
-    console.log(error);
+    const [addTransportRequest, { isLoading, error, isSuccess }] = useAddTransportRequestMutation();    
     
     const navigate = useNavigate();
 

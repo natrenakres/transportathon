@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Transportathon.Application.Transports.AcceptRequestAnswer;
 using Transportathon.Application.Transports.AddTransportRequest;
 using Transportathon.Application.Transports.AnswerTransportRequest;
 using Transportathon.Application.Transports.GetAllTransportRequest;
@@ -51,7 +52,6 @@ public class TransportRequestController : ControllerBase
         return Ok(result.Value);
     }
 
-
     [HttpPost]
     public async Task<IActionResult> AddTransportRequest(TransportRequest request, CancellationToken cancellationToken)
     {
@@ -78,7 +78,6 @@ public class TransportRequestController : ControllerBase
 
         return CreatedAtAction(nameof(GetTransportRequest), new { id = result.Value }, result.Value);
     }
-
 
     [HttpPost("{requestId:guid}/answer")]
     public async Task<IActionResult> AnswerTransportRequest(Guid requestId, AnswerTransportRequest answer)
@@ -110,4 +109,21 @@ public class TransportRequestController : ControllerBase
 
         return Ok(result.Value);
     }
+
+    [HttpPut("{requestId:guid}/answer/{answerId:guid}/accept")]
+    public async Task<IActionResult> AcceptRequestAnswer(Guid requestId, Guid answerId, CancellationToken cancellationToken)
+    {
+        var command = new AcceptRequestAnswerCommand(answerId, requestId);
+
+        var result = await _sender.Send(command, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return BadRequest(result.Error);
+        }
+
+        return Ok(result.Value);
+    }
+
+    
 }

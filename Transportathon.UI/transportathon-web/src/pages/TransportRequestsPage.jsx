@@ -45,7 +45,7 @@ const TransportRequestsPage = () => {
                                                 <td>{transportRequest.address.street}  {transportRequest.address.city}  {transportRequest.address.country}</td>
                                             </>
                                         )                                      }
-                                        <td>
+                                        <td>                                        
                                         {
                                             userInfo && !userInfo.isOwner && (
                                                 <LinkContainer to={`/transport/requests/${transportRequest.id}/answers`}>
@@ -70,15 +70,15 @@ const TransportRequestsPage = () => {
                                                 userInfo && userInfo.isOwner &&
                                                 <LinkContainer to={`/transport/requests/${transportRequest.id}/answers/create`}>
                                                     <Button variant="warning" className="btn-sm">
-                                                        Answer
+                                                        Answer 
                                                     </Button>
                                                 </LinkContainer>
 
                                             }
                                             {
-                                                transportRequest.status === 'Booked' && (
+                                                transportRequest.status === 'Accepted' && (
                                                     <LinkContainer to={`/bookings/${transportRequest.id}/create`}>
-                                                        <Button variant="warning" className="btn-sm">
+                                                        <Button variant="primary" className="btn-sm">
                                                            Add Booking
                                                         </Button>
                                                     </LinkContainer>

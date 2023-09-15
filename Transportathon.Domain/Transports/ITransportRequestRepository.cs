@@ -6,6 +6,7 @@ public interface ITransportRequestRepository
     Task<List<TransportRequest>> GetAllAsync(CancellationToken cancellationToken = default);
     Task<List<TransportRequest>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken = default);
 
+    Task<TransportRequest?> GetWithAnswersAsync(Guid requestId, CancellationToken cancellationToken = default);
     Task<TransportRequest?> GetByUserIdAsync(Guid requestId, Guid userId,
         CancellationToken cancellationToken = default);
 

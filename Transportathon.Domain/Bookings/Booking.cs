@@ -1,4 +1,5 @@
 using Transportathon.Domain.Abstractions;
+using Transportathon.Domain.Transports;
 using Transportathon.Domain.Users;
 
 namespace Transportathon.Domain.Bookings;
@@ -30,8 +31,10 @@ public sealed class Booking : Entity
     public Guid RequestId { get; private set; }
 
     public Guid CompanyId { get; private set; }
+    public Company? Company { get; private set; }
 
     public Guid VehicleId { get; private set; }
+    public Vehicle? Vehicle { get; private set; }
 
     public Guid CarrierId { get; private set; }
     public Guid? UserId { get; private set; }

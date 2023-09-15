@@ -23,6 +23,12 @@ public class TransportRequestRepository : Repository<TransportRequest>, ITranspo
             .FirstOrDefaultAsync(r => (r.UserId == userId &&
                                        r.Id == requestId), cancellationToken);
     }
+    public async Task<TransportRequest?> GetWithAnswersAsync(Guid requestId, CancellationToken cancellationToken = default)
+    {
+        return await DbContext.Set<TransportRequest>()
+            .Include(r => r.Answers)
+            .FirstOrDefaultAsync(r => r.Id == requestId, cancellationToken);
+    }
     
     public async Task<List<TransportRequest>> GetAllByUserIdAsync(Guid userId, CancellationToken cancellationToken = default)
     {

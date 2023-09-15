@@ -17,6 +17,14 @@ public class UserRepository : Repository<User>, IUserRepository
             .Include(u => u.Company)
             .FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
     }
+    
+    public async Task<User?> GetCompanyAsync(Guid id, CancellationToken cancellationToken = default)
+    {
+        return await DbContext
+            .Set<User>()
+            .Include(u => u.Company).ThenInclude(c => c!.Vehicles)
+            .FirstOrDefaultAsync(user => user.Id == id, cancellationToken);
+    }
 
     public async Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default)
     {

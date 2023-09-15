@@ -24,7 +24,7 @@ public class GetTransportRequestAnswersQueryHandler : IQueryHandler<GetTransport
         }
 
         var answers = transportRequest.Answers
-            .Select(a => new TransportRequestAnswersResponse(a.Company.Name.Value, a.Price.Amount, a.Price.Currency.Code, a.IsAcceptedFromMember))
+            .Select(a => new TransportRequestAnswersResponse(a.Id, a.Company.Name.Value, a.Price.Amount, a.Price.Currency.Code, a.IsAcceptedFromMember))
             .ToList();
 
         return answers;

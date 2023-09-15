@@ -5,7 +5,7 @@ using Transportathon.Domain.Transports;
 
 namespace Transportathon.Application.Bookings.ReserveBooking;
 
-internal sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBookingCommand>
+internal sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBookingCommand, Guid>
 {
     private readonly ITransportRequestRepository _transportRequestRepository;
     private readonly ICompanyRepository _companyRepository;
@@ -21,13 +21,13 @@ internal sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBook
         _bookingRepository = bookingRepository;
     }
 
-    public async Task<Result> Handle(ReserveBookingCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Guid>> Handle(ReserveBookingCommand request, CancellationToken cancellationToken)
     {
-        var transportRequest = await _transportRequestRepository.GetByIdAsync(request.TransportRequestId, cancellationToken);
+        var transportRequest = await _transportRequestRepository.GetWithAnswersAsync(request.TransportRequestId, cancellationToken);
         
         if (transportRequest is null)
         {
-            return Result.Failure<TransportRequestStatus>(TransportRequestErrors.NotFound);
+            return Result.Failure<Guid>(TransportRequestErrors.NotFound);
         }
 
         transportRequest.SetBooked();
@@ -35,7 +35,7 @@ internal sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBook
 
         if (answer is null)
         {
-            return Result.Failure(TransportRequestAnswerErrors.NotFound);
+            return Result.Failure<Guid>(TransportRequestAnswerErrors.NotFound);
         }
 
         var company = await _companyRepository.GetByIdAsync(answer.CompanyId, cancellationToken);
@@ -44,7 +44,7 @@ internal sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBook
         
         if (carrier is null)
         {
-            return Result.Failure(CarrierErrors.NotFound);
+            return Result.Failure<Guid>(CarrierErrors.NotFound);
         }
         
         var booking =  Booking.Create(request.TransportRequestId, answer.CompanyId, transportRequest.UserId, BookingStatus.Started,
@@ -53,6 +53,6 @@ internal sealed class ReserveBookingCommandHandler : ICommandHandler<ReserveBook
         
         await _bookingRepository.AddAsync(booking);
         await _unitOfWork.SaveChangesAsync(cancellationToken);
-        return Result.Success();
+        return booking.Id;
     }
 }

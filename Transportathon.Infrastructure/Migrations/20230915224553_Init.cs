@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Transportathon.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class CreateDatabase : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -57,39 +57,12 @@ namespace Transportathon.Infrastructure.Migrations
                     Name = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(400)", maxLength: 400, nullable: false),
                     Phone = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    Role = table.Column<int>(type: "int", nullable: false)
+                    Role = table.Column<int>(type: "int", nullable: false),
+                    Password = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "TransportRequestAnswers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Price_Amount = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
-                    Price_Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsAcceptedFromMember = table.Column<bool>(type: "bit", nullable: false),
-                    TransportRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TransportRequestAnswers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_TransportRequestAnswers_TransportRequests_RequestId",
-                        column: x => x.RequestId,
-                        principalTable: "TransportRequests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_TransportRequestAnswers_TransportRequests_TransportRequestId",
-                        column: x => x.TransportRequestId,
-                        principalTable: "TransportRequests",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -112,6 +85,40 @@ namespace Transportathon.Infrastructure.Migrations
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TransportRequestAnswers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    RequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Price_Amount = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
+                    Price_Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    IsAcceptedFromMember = table.Column<bool>(type: "bit", nullable: false),
+                    TransportRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TransportRequestAnswers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TransportRequestAnswers_Companies_CompanyId",
+                        column: x => x.CompanyId,
+                        principalTable: "Companies",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TransportRequestAnswers_TransportRequests_RequestId",
+                        column: x => x.RequestId,
+                        principalTable: "TransportRequests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TransportRequestAnswers_TransportRequests_TransportRequestId",
+                        column: x => x.TransportRequestId,
+                        principalTable: "TransportRequests",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -143,27 +150,6 @@ namespace Transportathon.Infrastructure.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Carriers",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    CanCommunicateWithMember = table.Column<bool>(type: "bit", nullable: false),
-                    Experience = table.Column<int>(type: "int", maxLength: 50, nullable: false),
-                    Profession = table.Column<int>(type: "int", nullable: false),
-                    VehicleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Carriers", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Carriers_Vehicles_VehicleId",
-                        column: x => x.VehicleId,
-                        principalTable: "Vehicles",
-                        principalColumn: "Id");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Bookings",
                 columns: table => new
                 {
@@ -180,12 +166,6 @@ namespace Transportathon.Infrastructure.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Bookings", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Bookings_Carriers_CarrierId",
-                        column: x => x.CarrierId,
-                        principalTable: "Carriers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Bookings_Companies_CompanyId",
                         column: x => x.CompanyId,
@@ -211,10 +191,61 @@ namespace Transportathon.Infrastructure.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
-            migrationBuilder.CreateIndex(
-                name: "IX_Bookings_CarrierId",
-                table: "Bookings",
-                column: "CarrierId");
+            migrationBuilder.CreateTable(
+                name: "Carriers",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    CanCommunicateWithMember = table.Column<bool>(type: "bit", nullable: false),
+                    Experience = table.Column<int>(type: "int", maxLength: 50, nullable: false),
+                    Profession = table.Column<int>(type: "int", nullable: false),
+                    VehicleId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Carriers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Carriers_Vehicles_VehicleId",
+                        column: x => x.VehicleId,
+                        principalTable: "Vehicles",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Reviews",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TransportRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BookingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Rating = table.Column<int>(type: "int", nullable: false),
+                    Comment = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
+                    CreatedOnUtc = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Reviews", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Bookings_BookingId",
+                        column: x => x.BookingId,
+                        principalTable: "Bookings",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reviews_TransportRequests_TransportRequestId",
+                        column: x => x.TransportRequestId,
+                        principalTable: "TransportRequests",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Reviews_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_CompanyId",
@@ -248,6 +279,26 @@ namespace Transportathon.Infrastructure.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_Reviews_BookingId",
+                table: "Reviews",
+                column: "BookingId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_TransportRequestId",
+                table: "Reviews",
+                column: "TransportRequestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Reviews_UserId",
+                table: "Reviews",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TransportRequestAnswers_CompanyId",
+                table: "TransportRequestAnswers",
+                column: "CompanyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TransportRequestAnswers_RequestId",
                 table: "TransportRequestAnswers",
                 column: "RequestId");
@@ -278,13 +329,16 @@ namespace Transportathon.Infrastructure.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Bookings");
+                name: "Carriers");
+
+            migrationBuilder.DropTable(
+                name: "Reviews");
 
             migrationBuilder.DropTable(
                 name: "TransportRequestAnswers");
 
             migrationBuilder.DropTable(
-                name: "Carriers");
+                name: "Bookings");
 
             migrationBuilder.DropTable(
                 name: "TransportRequests");

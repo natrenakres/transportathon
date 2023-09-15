@@ -18,18 +18,6 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
             .WithMany()
             .HasForeignKey(booking => booking.RequestId);
 
-        builder.HasOne<Company>()
-            .WithMany()
-            .HasForeignKey(booking => booking.CompanyId);
-
-        builder.HasOne<Carrier>()
-            .WithMany()
-            .HasForeignKey(booking => booking.CarrierId);
-
-        builder.HasOne<Vehicle>()
-            .WithMany()
-            .HasForeignKey(booking => booking.VehicleId);
-
 
     }
 }

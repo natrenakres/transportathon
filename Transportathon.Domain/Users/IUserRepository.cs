@@ -6,4 +6,6 @@ public interface IUserRepository
     
     Task AddAsync(User user);
     Task<User?> GetByEmailAsync(string email, CancellationToken cancellationToken = default);
+
+    Task<User?> GetCompanyAsync(Guid id, CancellationToken cancellationToken = default);
 }

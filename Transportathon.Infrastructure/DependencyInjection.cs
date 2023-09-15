@@ -7,6 +7,7 @@ using Microsoft.IdentityModel.Tokens;
 using Transportathon.Application.Abstractions.Authentication;
 using Transportathon.Domain.Abstractions;
 using Transportathon.Domain.Bookings;
+using Transportathon.Domain.Reviews;
 using Transportathon.Domain.Transports;
 using Transportathon.Domain.Users;
 using Transportathon.Infrastructure.Authentication;
@@ -32,6 +33,7 @@ public static class DependencyInjection
         services.AddScoped<ITransportRequestRepository, TransportRequestRepository>();
         services.AddScoped<ITransportRequestAnswerRepository, TransportRequestAnswerRepository>();
         services.AddScoped<IUserRepository, UserRepository>();
+        services.AddScoped<IReviewRepository, ReviewRepository>();
 
         services.AddScoped<IUnitOfWork>(sp => sp.GetRequiredService<ApplicationDbContext>());
 

@@ -14,8 +14,8 @@ public static class DependencyInjection
         {
             configuration.RegisterServicesFromAssembly(assembly);
 
-            configuration.AddOpenBehavior(typeof(ValidationBehaviour<,>));
             configuration.AddOpenBehavior(typeof(BaseBehavior<,>));
+            configuration.AddOpenBehavior(typeof(ValidationBehaviour<,>));
         });
 
 

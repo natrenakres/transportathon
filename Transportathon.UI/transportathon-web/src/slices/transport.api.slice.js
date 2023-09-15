@@ -16,8 +16,33 @@ export const transportApiSlice = apiSlice.injectEndpoints({
                 method: 'GET',
             })
         }),
+        answerTransportRequest: builder.mutation({
+            query: (data) => ({
+                url: `${BASE_URL}/api/transport/request/${data.id}/answer`,
+                method: 'POST',
+                body: data.data,
+            })
+        }),
+        getTransportRequestAnswers: builder.query({
+            query: (id) => ({
+                url: `${BASE_URL}/api/transport/request/${id}/answers`,
+                method: 'GET',
+            })
+        }),
+        acceptTransportRequestAnswer: builder.mutation({
+            query: (data) => ({
+                url: `${BASE_URL}/api/transport/request/${data.id}/answer/${data.answerId}/accept`,
+                method: 'PUT',
+            })
+        }),
     })
 });
 
 
-export const { useAddTransportRequestMutation, useGetMemberTransportRequestsQuery } = transportApiSlice;
+export const { 
+    useAddTransportRequestMutation, 
+    useGetMemberTransportRequestsQuery, 
+    useAnswerTransportRequestMutation,
+    useGetTransportRequestAnswersQuery,
+    useAcceptTransportRequestAnswerMutation
+ } = transportApiSlice;

@@ -35,7 +35,7 @@ const Header = () => {
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="ms-auto">
                             <Nav.Link href="/transport/requests">Transport Requests</Nav.Link>
-                            <Nav.Link href="/bookings/list">Bookings</Nav.Link>                            
+                            <Nav.Link href="/bookings">Bookings</Nav.Link>                            
                             { userInfo ? (
                                 <>
                                     <NavDropdown title={userInfo.name} id="username">                                                                            

@@ -1,6 +1,8 @@
 ﻿using Transportathon.Domain.Abstractions;
 using Transportathon.Domain.Bookings;
 using Transportathon.Domain.Reviews.Events;
+using Transportathon.Domain.Transports;
+using Transportathon.Domain.Users;
 
 namespace Transportathon.Domain.Reviews;
 
@@ -16,7 +18,7 @@ public sealed class Review : Entity
         DateTime createdOnUtc)
         : base(id)
     {
-        RequestId = requestId;
+        TransportRequestId = requestId;
         BookingId = bookingId;
         UserId = userId;
         Rating = rating;
@@ -26,11 +28,15 @@ public sealed class Review : Entity
 
     private Review() { }
 
-    public Guid RequestId { get; private set; }
+    public Guid TransportRequestId { get; private set; }
+    public TransportRequest? TransportRequest { get; private set; }
 
     public Guid BookingId { get; private set; }
+    public Booking? Booking { get; private set; }
 
     public Guid UserId { get; private set; }
+
+    public User? User { get; private set; }
 
     public Rating Rating { get; private set; }
 
