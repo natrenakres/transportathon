@@ -17,6 +17,8 @@ public sealed class Driver : Entity
 
     public Experience Experience { get; private set; }
 
+    public Vehicle Vehicle { get; private set; }
+
     public static Driver Create(Name name, Experience experience)
     {
         var driver = new Driver(Guid.NewGuid(), name, experience);

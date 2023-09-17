@@ -1,4 +1,5 @@
 using Transportathon.Domain.Abstractions;
+using Transportathon.Domain.Reviews;
 using Transportathon.Domain.Transports;
 using Transportathon.Domain.Users;
 
@@ -16,7 +17,7 @@ public sealed class Booking : Entity
         Guid carrierIdForCommunication, 
         DateTime? estimatedEndDate): base(id)
     {
-        RequestId = requestId;
+        TransportRequestId = requestId;
         CompanyId = companyId;
         UserId = userId;
         Status = status;
@@ -28,7 +29,8 @@ public sealed class Booking : Entity
 
     private Booking() { }
 
-    public Guid RequestId { get; private set; }
+    public Guid TransportRequestId { get; private set; }
+    public TransportRequest? TransportRequest { get; private set; }
 
     public Guid CompanyId { get; private set; }
     public Company? Company { get; private set; }
@@ -44,6 +46,8 @@ public sealed class Booking : Entity
     public DateTime BeginDate { get; private set; }
 
     public DateTime? EstimatedEndDate { get; private set; }
+
+    public List<Review> Reviews { get; private set; } = new();
 
     public static Booking Create(Guid requestId, Guid companyId, Guid userId, BookingStatus status, DateTime beginDate,
         Guid vehicleId, Guid carrierIdForCommunication, DateTime? estimatedEndDate = null)

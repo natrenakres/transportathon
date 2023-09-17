@@ -23,16 +23,22 @@ export const usersApiSlice = apiSlice.injectEndpoints({
                 method: 'POST',
             })
         }),
-        getCompanyInfo: builder.query({
+        getCompanyVehicle: builder.query({
             query: () => ({
-                url: `${USERS_URL}/company/info`,
+                url: `${USERS_URL}/company/vehicle`,
                 method: 'GET',
             })
         }),
+        getCompanyBookings: builder.query({
+            query: (companyId) => ({
+                url: `${USERS_URL}/company/${companyId}/info`,
+                method: 'GET',
+            })
+        }),     
     }),
 });
 
 
 
-export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useGetCompanyInfoQuery} = usersApiSlice;
+export const { useLoginMutation, useLogoutMutation, useRegisterMutation, useGetCompanyVehicleQuery, useGetCompanyBookingsQuery} = usersApiSlice;
 

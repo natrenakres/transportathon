@@ -4,7 +4,7 @@ namespace Transportathon.Domain.Shared;
 public record Currency
 {
     internal static readonly Currency None = new("");
-    public static readonly Currency Usd = new("USD");
+    public static readonly Currency Usd = new("EUR");
     public static readonly Currency Tl = new("TL");
 
     private Currency(string code) => Code = code;

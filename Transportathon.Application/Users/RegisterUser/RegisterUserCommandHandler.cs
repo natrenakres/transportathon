@@ -1,22 +1,26 @@
-﻿using Transportathon.Application.Abstractions.Messaging;
+﻿using Transportathon.Application.Abstractions.Authentication;
+using Transportathon.Application.Abstractions.Messaging;
+using Transportathon.Application.Users.LogInUser;
 using Transportathon.Domain.Abstractions;
 using Transportathon.Domain.Shared;
 using Transportathon.Domain.Users;
 
 namespace Transportathon.Application.Users.RegisterUser;
 
-internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, Guid>
+internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserCommand, AccessTokenResponse>
 {
     private readonly IUserRepository _userRepository;
     private readonly IUnitOfWork _unitOfWork;
+    private readonly IAuthenticationService _authenticationService;
 
-    public RegisterUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork)
+    public RegisterUserCommandHandler(IUserRepository userRepository, IUnitOfWork unitOfWork, IAuthenticationService authenticationService)
     {
         _userRepository = userRepository;
         _unitOfWork = unitOfWork;
+        _authenticationService = authenticationService;
     }
 
-    public async Task<Result<Guid>> Handle(
+    public async Task<Result<AccessTokenResponse>> Handle(
         RegisterUserCommand request,
         CancellationToken cancellationToken)
     {
@@ -28,9 +32,14 @@ internal sealed class RegisterUserCommandHandler : ICommandHandler<RegisterUserC
             UserRole.Member);
 
         await _userRepository.AddAsync(user);
-
         await _unitOfWork.SaveChangesAsync(cancellationToken);
 
-        return user.Id;
+        var result = _authenticationService.GetAccessTokenAsync(user.Id, user.Name.Value, request.Email,  user.Role);
+
+        var isOwner = user.Role == UserRole.Owner;
+
+        return result.IsFailure ? 
+            Result.Failure<AccessTokenResponse>(UserErrors.InvalidCredentials) : 
+            new AccessTokenResponse(result.Value, user.Name.Value, isOwner);
     }
 }

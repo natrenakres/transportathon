@@ -7,14 +7,15 @@ public sealed class TransportRequestAnswer : Entity
 {
     public TransportRequestAnswer(Guid id, Guid requestId, Guid companyId, Money price) : base(id)
     {
-        RequestId = requestId;
+        TransportRequestId = requestId;
         Price = price;
         CompanyId = companyId;
     }
 
     private TransportRequestAnswer() { }
 
-    public Guid RequestId { get; private set; }
+    public Guid TransportRequestId { get; private set; }
+    public TransportRequest TransportRequest { get; private set; }
 
     public Guid CompanyId { get; private set; }
     public Company Company { get; private set; }

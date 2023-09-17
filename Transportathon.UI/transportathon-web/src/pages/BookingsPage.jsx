@@ -49,15 +49,13 @@ const BookingsPage = () => {
                                         <td>{booking.numberPlate}</td> 
                                         <td>{booking.status}</td>                                         
                                         <td>                                        
-                                        {
-                                            userInfo && !userInfo.isOwner && booking.status !== 'Completed' && (                                                
-                                                <Button variant="primary" className="btn-sm" onClick={()=> handleComplete(booking.id)}>
-                                                    Complete
-                                                </Button>                                                
-                                            )
-                                        }
-                                            
-                                            
+                                            {
+                                                userInfo && !userInfo.isOwner && booking.status !== 'Completed' && (                                                
+                                                    <Button variant="primary" className="btn-sm" onClick={()=> handleComplete(booking.id)}>
+                                                        Complete
+                                                    </Button>                                                
+                                                )
+                                            }                                            
                                             
                                             {
                                                 userInfo && !userInfo.isOwner && booking.status === 'Completed' &&
@@ -68,6 +66,17 @@ const BookingsPage = () => {
                                                 </LinkContainer>
 
                                             }
+
+                                            {
+                                                userInfo && !userInfo.isOwner && booking.status === 'Completed' &&
+                                                <LinkContainer to={`/company/${booking.companyId}/info`}>
+                                                    <Button variant="warning" className="btn-sm">
+                                                        Company Info
+                                                    </Button>
+                                                </LinkContainer>
+                                            }
+
+                            
                                             
                                             
                                         </td>

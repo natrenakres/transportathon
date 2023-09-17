@@ -40,11 +40,11 @@ namespace Transportathon.Infrastructure.Migrations
                     b.Property<DateTime?>("EstimatedEndDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<Guid>("RequestId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<int>("Status")
                         .HasColumnType("int");
+
+                    b.Property<Guid>("TransportRequestId")
+                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
@@ -56,7 +56,7 @@ namespace Transportathon.Infrastructure.Migrations
 
                     b.HasIndex("CompanyId");
 
-                    b.HasIndex("RequestId");
+                    b.HasIndex("TransportRequestId");
 
                     b.HasIndex("UserId");
 
@@ -71,7 +71,7 @@ namespace Transportathon.Infrastructure.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("BookingId")
+                    b.Property<Guid?>("BookingId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Comment")
@@ -85,17 +85,12 @@ namespace Transportathon.Infrastructure.Migrations
                     b.Property<int>("Rating")
                         .HasColumnType("int");
 
-                    b.Property<Guid>("TransportRequestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
+                    b.Property<Guid?>("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("BookingId");
-
-                    b.HasIndex("TransportRequestId");
 
                     b.HasIndex("UserId");
 
@@ -236,17 +231,12 @@ namespace Transportathon.Infrastructure.Migrations
                     b.Property<bool>("IsAcceptedFromMember")
                         .HasColumnType("bit");
 
-                    b.Property<Guid>("RequestId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid?>("TransportRequestId")
+                    b.Property<Guid>("TransportRequestId")
                         .HasColumnType("uniqueidentifier");
 
                     b.HasKey("Id");
 
                     b.HasIndex("CompanyId");
-
-                    b.HasIndex("RequestId");
 
                     b.HasIndex("TransportRequestId");
 
@@ -340,9 +330,9 @@ namespace Transportathon.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Transportathon.Domain.Transports.TransportRequest", null)
+                    b.HasOne("Transportathon.Domain.Transports.TransportRequest", "TransportRequest")
                         .WithMany()
-                        .HasForeignKey("RequestId")
+                        .HasForeignKey("TransportRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -358,6 +348,8 @@ namespace Transportathon.Infrastructure.Migrations
 
                     b.Navigation("Company");
 
+                    b.Navigation("TransportRequest");
+
                     b.Navigation("User");
 
                     b.Navigation("Vehicle");
@@ -367,25 +359,13 @@ namespace Transportathon.Infrastructure.Migrations
                 {
                     b.HasOne("Transportathon.Domain.Bookings.Booking", "Booking")
                         .WithMany()
-                        .HasForeignKey("BookingId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Transportathon.Domain.Transports.TransportRequest", "TransportRequest")
-                        .WithMany()
-                        .HasForeignKey("TransportRequestId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BookingId");
 
                     b.HasOne("Transportathon.Domain.Users.User", "User")
                         .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("UserId");
 
                     b.Navigation("Booking");
-
-                    b.Navigation("TransportRequest");
 
                     b.Navigation("User");
                 });
@@ -477,15 +457,11 @@ namespace Transportathon.Infrastructure.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Transportathon.Domain.Transports.TransportRequest", null)
-                        .WithMany()
-                        .HasForeignKey("RequestId")
+                    b.HasOne("Transportathon.Domain.Transports.TransportRequest", "TransportRequest")
+                        .WithMany("Answers")
+                        .HasForeignKey("TransportRequestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
-
-                    b.HasOne("Transportathon.Domain.Transports.TransportRequest", null)
-                        .WithMany("Answers")
-                        .HasForeignKey("TransportRequestId");
 
                     b.OwnsOne("Transportathon.Domain.Shared.Money", "Price", b1 =>
                         {
@@ -511,6 +487,8 @@ namespace Transportathon.Infrastructure.Migrations
 
                     b.Navigation("Price")
                         .IsRequired();
+
+                    b.Navigation("TransportRequest");
                 });
 
             modelBuilder.Entity("Transportathon.Domain.Transports.Vehicle", b =>

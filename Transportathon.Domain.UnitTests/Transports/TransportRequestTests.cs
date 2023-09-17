@@ -57,7 +57,7 @@ public class TransportRequestTests : BaseTest
 
 
         transportRequest.Answers.Count.Should().BeGreaterThan(0);
-        answer.RequestId.Should().Be(transportRequest.Id);
+        answer.TransportRequestId.Should().Be(transportRequest.Id);
         answer.Price.Should().Be(price);
     }
     

@@ -29,9 +29,5 @@ public class VehicleConfiguration : IEntityTypeConfiguration<Vehicle>
             .HasMaxLength(50)
             .HasConversion(year => year.Value, value => new Year(value));
 
-        builder.HasOne<Driver>()
-            .WithMany()
-            .HasForeignKey(v => v.DriverId);
-
     }
 }

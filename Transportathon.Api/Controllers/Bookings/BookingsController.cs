@@ -2,6 +2,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Transportathon.Application.Bookings.CompleteBooking;
+using Transportathon.Application.Bookings.GetBooking;
 using Transportathon.Application.Bookings.GetBookings;
 using Transportathon.Application.Bookings.ReserveBooking;
 
@@ -33,11 +34,17 @@ public class BookingsController : ControllerBase
         return Ok(result.Value);
     }
     
-    [HttpGet("{id:guid}")]
-    public async Task<IActionResult> GetBooking(Guid id, CancellationToken cancellationToken)
+    [HttpGet("{transportRequestId:guid}")]
+    public async Task<IActionResult> GetBooking(Guid transportRequestId, CancellationToken cancellationToken)
     {
+        var query = new GetBookingQuery(transportRequestId);
+        var result = await _sender.Send(query, cancellationToken);
 
-        return Ok();
+        if (result.IsFailure)
+        {
+            return BadRequest(result.Error);
+        }
+        return Ok(result.Value);
     }
 
     [HttpPost]

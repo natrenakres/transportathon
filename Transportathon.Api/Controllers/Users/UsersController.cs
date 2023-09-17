@@ -1,6 +1,7 @@
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Transportathon.Application.Users.GetCompanyInfoQuery;
 using Transportathon.Application.Users.GetCompanyVehicle;
 using Transportathon.Application.Users.LogInUser;
 using Transportathon.Application.Users.RegisterUser;
@@ -58,10 +59,25 @@ public class UsersController : ControllerBase
         return Ok();
     }
     
-    [HttpGet("company/info")]
-    public async Task<IActionResult> GetCompanyInfo(CancellationToken cancellationToken)
+    [HttpGet("company/vehicle")]
+    public async Task<IActionResult> GetCompanyVehicle(CancellationToken cancellationToken)
     {
         var query = new GetCompanyVehicleQuery();
+
+        var result = await _sender.Send(query, cancellationToken);
+
+        if (result.IsFailure)
+        {
+            return BadRequest(result.Error);
+        }
+
+        return Ok(result.Value);
+    }
+    
+    [HttpGet("company/{companyId:guid}/info")]
+    public async Task<IActionResult> GetCompanyInfo(Guid companyId, CancellationToken cancellationToken)
+    {
+        var query = new GetCompanyInfoQuery(companyId);
 
         var result = await _sender.Send(query, cancellationToken);
 

@@ -22,6 +22,7 @@ public sealed class Vehicle : Entity
     public VehicleType Type { get; private set; }
 
     public Guid? DriverId { get; private set; }
+    public Driver? Driver { get; private set; }
     public NumberPlate NumberPlate { get; private set; }
 
     public Color Color { get; private set; }

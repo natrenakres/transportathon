@@ -21,7 +21,13 @@ export const transportApiSlice = apiSlice.injectEndpoints({
                 url: `${BASE_URL}/api/bookings`,
                 method: 'GET',
             })
-        }),        
+        }),
+        getBooking: builder.query({
+            query: (bookingId) => ({
+                url: `${BASE_URL}/api/bookings/${bookingId}`,
+                method: 'GET',
+            })
+        }),    
     })
 });
 
@@ -29,5 +35,6 @@ export const transportApiSlice = apiSlice.injectEndpoints({
 export const { 
     useReserveBookingMutation,
     useCompleteBookingMutation,
-    useGetBookingsQuery
+    useGetBookingsQuery,
+    useGetBookingQuery
  } = transportApiSlice;

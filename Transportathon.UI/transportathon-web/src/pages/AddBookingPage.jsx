@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useGetCompanyInfoQuery } from '../slices/user.api.slice';
+import { useGetCompanyVehicleQuery } from '../slices/user.api.slice';
 import { useReserveBookingMutation } from '../slices/bookings.api.slice';
 import { useParams } from 'react-router-dom';
 import { Form, Button, Col, Row } from 'react-bootstrap';
@@ -14,7 +14,7 @@ import { FaArrowLeft } from 'react-icons/fa'
 const AddBookingPage = () => {    
     const [vehicle, setVehicle] = useState();
 
-    const { data, isLoading, } = useGetCompanyInfoQuery();
+    const { data, isLoading, } = useGetCompanyVehicleQuery();
     const { id } = useParams();
     const [reserveBooking, { isLoading: isReserving }] = useReserveBookingMutation();
     const navigate = useNavigate();

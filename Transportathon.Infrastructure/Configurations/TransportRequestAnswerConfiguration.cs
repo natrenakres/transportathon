@@ -22,8 +22,5 @@ public class TransportRequestAnswerConfiguration : IEntityTypeConfiguration<Tran
                 .HasConversion(currency => currency.Code, code => Currency.FromCode(code));
         });
 
-        builder.HasOne<TransportRequest>()
-            .WithMany()
-            .HasForeignKey(k => k.RequestId);
     }
 }

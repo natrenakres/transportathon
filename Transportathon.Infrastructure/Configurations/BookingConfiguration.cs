@@ -14,10 +14,6 @@ public class BookingConfiguration : IEntityTypeConfiguration<Booking>
 
         builder.HasKey(b => b.Id);
 
-        builder.HasOne<TransportRequest>()
-            .WithMany()
-            .HasForeignKey(booking => booking.RequestId);
-
 
     }
 }

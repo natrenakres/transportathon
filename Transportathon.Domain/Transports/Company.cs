@@ -1,4 +1,5 @@
 using Transportathon.Domain.Abstractions;
+using Transportathon.Domain.Bookings;
 using Transportathon.Domain.Shared;
 using Transportathon.Domain.Users;
 
@@ -32,6 +33,7 @@ public sealed class Company : Entity
 
     public List<Vehicle> Vehicles { get; private set; } = new();
 
+    public List<Booking> Bookings { get; private set; } = new();
 
     public static Company Create(Name name, Logo logo, Email email, Phone phone, Guid userId)
     {

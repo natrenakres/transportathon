@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Transportathon.Infrastructure.Migrations
 {
     /// <inheritdoc />
-    public partial class Init : Migration
+    public partial class CreateDatabase : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -92,12 +92,11 @@ namespace Transportathon.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TransportRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Price_Amount = table.Column<decimal>(type: "decimal(18,4)", nullable: false),
                     Price_Currency = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    IsAcceptedFromMember = table.Column<bool>(type: "bit", nullable: false),
-                    TransportRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
+                    IsAcceptedFromMember = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -109,16 +108,11 @@ namespace Transportathon.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TransportRequestAnswers_TransportRequests_RequestId",
-                        column: x => x.RequestId,
-                        principalTable: "TransportRequests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
                         name: "FK_TransportRequestAnswers_TransportRequests_TransportRequestId",
                         column: x => x.TransportRequestId,
                         principalTable: "TransportRequests",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -154,7 +148,7 @@ namespace Transportathon.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    RequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TransportRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CompanyId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     VehicleId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     CarrierId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -173,8 +167,8 @@ namespace Transportathon.Infrastructure.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_Bookings_TransportRequests_RequestId",
-                        column: x => x.RequestId,
+                        name: "FK_Bookings_TransportRequests_TransportRequestId",
+                        column: x => x.TransportRequestId,
                         principalTable: "TransportRequests",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -217,9 +211,8 @@ namespace Transportathon.Infrastructure.Migrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    TransportRequestId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    BookingId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    BookingId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     Rating = table.Column<int>(type: "int", nullable: false),
                     Comment = table.Column<string>(type: "nvarchar(200)", maxLength: 200, nullable: false),
                     CreatedOnUtc = table.Column<DateTime>(type: "datetime2", nullable: false)
@@ -231,20 +224,12 @@ namespace Transportathon.Infrastructure.Migrations
                         name: "FK_Reviews_Bookings_BookingId",
                         column: x => x.BookingId,
                         principalTable: "Bookings",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Reviews_TransportRequests_TransportRequestId",
-                        column: x => x.TransportRequestId,
-                        principalTable: "TransportRequests",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Reviews_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -253,9 +238,9 @@ namespace Transportathon.Infrastructure.Migrations
                 column: "CompanyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Bookings_RequestId",
+                name: "IX_Bookings_TransportRequestId",
                 table: "Bookings",
-                column: "RequestId");
+                column: "TransportRequestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Bookings_UserId",
@@ -284,11 +269,6 @@ namespace Transportathon.Infrastructure.Migrations
                 column: "BookingId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Reviews_TransportRequestId",
-                table: "Reviews",
-                column: "TransportRequestId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Reviews_UserId",
                 table: "Reviews",
                 column: "UserId");
@@ -297,11 +277,6 @@ namespace Transportathon.Infrastructure.Migrations
                 name: "IX_TransportRequestAnswers_CompanyId",
                 table: "TransportRequestAnswers",
                 column: "CompanyId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_TransportRequestAnswers_RequestId",
-                table: "TransportRequestAnswers",
-                column: "RequestId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TransportRequestAnswers_TransportRequestId",

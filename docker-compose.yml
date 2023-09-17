@@ -11,7 +11,12 @@ services:
       - transportathon-db
     networks:
       - transportathon_net
-
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+:443;http://+:80
+    ports:
+      - "80"
+      - "7061:443"
   transportathon-db:
     image: mcr.microsoft.com/mssql/server:2022-latest
     container_name: Transportathon.Db

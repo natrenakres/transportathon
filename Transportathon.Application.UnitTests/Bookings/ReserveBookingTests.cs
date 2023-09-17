@@ -68,7 +68,7 @@ public class ReserveBookingTests
         
         var command = new ReserveBookingCommand(Guid.NewGuid(), Guid.NewGuid());
         var transportRepositoryMock = new Mock<ITransportRequestRepository>();
-        transportRepositoryMock.Setup(u => u.GetByIdAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
+        transportRepositoryMock.Setup(u => u.GetWithAnswersAsync(It.IsAny<Guid>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(transportRequest);
 
         var handler = new ReserveBookingCommandHandler(transportRepositoryMock.Object,

@@ -1,7 +1,7 @@
 import { useParams } from "react-router-dom";
 import { useGetTransportRequestAnswersQuery, useAcceptTransportRequestAnswerMutation } from "../slices/transport.api.slice";
 import { Table, Button } from 'react-bootstrap';
-import Message from '../components/Message';
+import { LinkContainer } from 'react-router-bootstrap';
 import Loader from '../components/Loader';
 import { toast } from 'react-toastify'
 
@@ -52,6 +52,12 @@ const TransportRequestAnswersPage = () => {
                                             className="btn-sm" onClick={() => handleAccept(answer.id)}>
                                                 Accept
                                             </Button>                                        
+                                            <LinkContainer to={`/company/${answer.companyId}/info`}>
+                                                <Button variant="light" className="btn-sm">
+                                                    Company Info
+                                                </Button>
+                                            </LinkContainer>
+
                                         </td>
                                     </tr>
                                 ))

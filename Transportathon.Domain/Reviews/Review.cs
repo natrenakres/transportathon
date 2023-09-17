@@ -10,7 +10,6 @@ public sealed class Review : Entity
 {
     private Review(
         Guid id,
-        Guid requestId,
         Guid bookingId,
         Guid userId,
         Rating rating,
@@ -18,7 +17,6 @@ public sealed class Review : Entity
         DateTime createdOnUtc)
         : base(id)
     {
-        TransportRequestId = requestId;
         BookingId = bookingId;
         UserId = userId;
         Rating = rating;
@@ -28,13 +26,12 @@ public sealed class Review : Entity
 
     private Review() { }
 
-    public Guid TransportRequestId { get; private set; }
-    public TransportRequest? TransportRequest { get; private set; }
+    
 
-    public Guid BookingId { get; private set; }
+    public Guid? BookingId { get; private set; }
     public Booking? Booking { get; private set; }
 
-    public Guid UserId { get; private set; }
+    public Guid? UserId { get; private set; }
 
     public User? User { get; private set; }
 
@@ -57,7 +54,6 @@ public sealed class Review : Entity
 
         var review = new Review(
             Guid.NewGuid(),
-            booking.RequestId,
             booking.Id,
             booking.UserId!.Value,
             rating,

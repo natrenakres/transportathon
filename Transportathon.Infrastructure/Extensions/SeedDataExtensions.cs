@@ -15,46 +15,47 @@ public static class SeedDataExtensions
         using var scope = app.ApplicationServices.CreateScope();
         var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
         var faker = new Faker();
+        var memberEmail = new Email("member@mail.com");
+        var member = User.Create(
+            new Name(faker.Name.FullName()),
+            memberEmail,
+            new Phone(faker.Phone.PhoneNumber()),
+            "1q2w3e4r",
+            UserRole.Member);
 
-        var email = new Email("owner@mail.com");
+        var ownerEmail = new Email("owner@mail.com");
         var owner = User.Create(
             new Name(faker.Name.FullName()),
-            email,
+            ownerEmail,
             new Phone(faker.Phone.PhoneNumber()),
             "1q2w3e4r",
             UserRole.Owner);
         var companyEmail = new Email("nakliyeci@mail.com");
-        var company1 = Company.Create(
+        var company = Company.Create(
             new Name(faker.Company.CompanyName()),
             new Logo("company_logo.png"),
             companyEmail,
             new Phone(faker.Phone.PhoneNumber()),
             owner.Id);
 
-        var driverName = new Name("Driver 1");
-        var driver = Driver.Create(driverName, new Experience(10));
-        var numberPlate = new NumberPlate("34-AK-775");
-        var vehicle = Vehicle.Create(
-            new VehicleModel("Mercedes"), 
-            new Year(2020), 
-            VehicleType.Lorry, 
-            numberPlate,
-            new Color("white"));
-        var carrier1 = Carrier.Create(new Name("C1"), new Year(1), Profession.Normal, false);
-        var carrier2 = Carrier.Create(new Name("C2"), new Year(2), Profession.Normal, false);
-        var carrier3 = Carrier.Create(new Name("C3"), new Year(3), Profession.Carpenter, false);
-        var carrier4 = Carrier.Create(new Name("C4"), new Year(4), Profession.Installer, true);
-        
-        if(await dbContext.Set<User>().FirstOrDefaultAsync(x => x.Email == email) is null)
+        var vehicles = new List<Vehicle>();
+        for (int i = 0; i < 5; i++)
         {
-            dbContext.Set<User>().Add(owner);
-            dbContext.Set<Company>().Add(company1);
-            await dbContext.SaveChangesAsync();
-        }
-
-        if (await dbContext.Set<Vehicle>().FirstOrDefaultAsync(v => v.NumberPlate == numberPlate) is null)
-        {
-            var company = await dbContext.Set<Company>().FirstOrDefaultAsync(x => x.Email == companyEmail);
+            var driverName = new Name($"Driver {i+1}");
+            var driver = Driver.Create(driverName, new Experience(2*(i+1)));
+            var numberPlate = new NumberPlate($"34-AK-77{i}");
+            var vehicle = Vehicle.Create(
+                new VehicleModel("Mercedes"), 
+                new Year(2010+i), 
+                VehicleType.Lorry, 
+                numberPlate,
+                new Color("white"));
+            var carrier1 = Carrier.Create(new Name($"C{i+1}"), new Year(1*(i+1)), Profession.Normal, false);
+            var carrier2 = Carrier.Create(new Name($"C{i+1}"), new Year(2*(i+1)), Profession.Normal, false);
+            var carrier3 = Carrier.Create(new Name($"C{i+1}"), new Year(3*(i+1)), Profession.Carpenter, false);
+            var carrier4 = Carrier.Create(new Name($"C{i+1}"), new Year(4*(i+1)), Profession.Installer, true);
+            
+            
             dbContext.Set<Driver>().Add(driver);
             dbContext.Set<Carrier>().Add(carrier1);
             dbContext.Set<Carrier>().Add(carrier2);
@@ -67,9 +68,29 @@ public static class SeedDataExtensions
             vehicle.AddCarrier(carrier2);
             vehicle.AddCarrier(carrier3);
             vehicle.AddCarrier(carrier4);
-            company?.AddVehicle(vehicle);
+            
+            vehicles.Add(vehicle);
+        }
+
+        if (await dbContext.Set<User>().FirstOrDefaultAsync(u => u.Email == memberEmail) is null)
+        {
+            dbContext.Set<User>().Add(member);
             await dbContext.SaveChangesAsync();
         }
+        
+
+        if(await dbContext.Set<User>().FirstOrDefaultAsync(x => x.Email == ownerEmail) is null)
+        {
+            dbContext.Set<User>().Add(owner);
+            dbContext.Set<Company>().Add(company);
+
+            foreach (var vehicle in vehicles)
+            {
+                company?.AddVehicle(vehicle);
+            }
+            await dbContext.SaveChangesAsync();
+        }
+        
         
     }
 }

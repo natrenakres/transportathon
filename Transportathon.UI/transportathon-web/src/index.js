@@ -19,8 +19,11 @@ import AnswerTransportRequestPage from "./pages/AnswerTransportRequestPage";
 import TransportRequestAnswersPage from "./pages/TransportRequestAnswersPage";
 import AddBookingPage from "./pages/AddBookingPage";
 import BookingsPage from "./pages/BookingsPage";
+import BookingDetailPage from "./pages/BookingDetailPage";
 import AddReviewPage from "./pages/AddReviewPage";
+import DispalyCompanyInfo from "./pages/DisplayCompanyInfo";
 import LoginPage from "./pages/LoginPage";
+import RegisterPage from './pages/RegisterPage';
 
 import PrivateRoute from './components/PrivateRoute';
 
@@ -33,14 +36,17 @@ const router = createBrowserRouter(
     <Route path="/" element={<App />} >
       <Route index={true} path="/" element={<HomePage />} />
       <Route path="/login" element={<LoginPage />} />
+      <Route path="/register" element={<RegisterPage />} />
       <Route path='' element={<PrivateRoute />}>
           <Route path="/transport/requests" element={<TransportRequestsPage />} />
           <Route path="/transport/requests/:id/answers/create" element={<AnswerTransportRequestPage />} />
           <Route path="/transport/requests/:id/answers" element={<TransportRequestAnswersPage />} />
           <Route path="/transport/requests/create" element={<AddTransportRequestsPage />} />
           <Route path="/bookings" element={<BookingsPage />} />          
+          <Route path="/bookings/:id" element={<BookingDetailPage />} />          
           <Route path="/bookings/:id/create" element={<AddBookingPage />} />          
           <Route path="/bookings/:id/reviews/create" element={<AddReviewPage />} />          
+          <Route path="/company/:id/info" element={<DispalyCompanyInfo />} />
       </Route>
     </Route>
   ));
